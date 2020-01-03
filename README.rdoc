@@ -1,20 +1,21 @@
 == README
 
-This is a demo site for Rodauth that runs on Rails, showing how you can use
-Rodauth in a Rails application.  It probably doesn't follow the Rails-way of
-doing things, as I don't know or care what that is, but it should hopefully
-at least provide an example of how it could be accomplished.
+Am trying to get this example up and running, but am falling down for some reason:
 
-This demo site does not use Rodauth's full security features via multiple
-database accounts, though it will use database functions on databases where
-Rodauth supports that.  This also shows how to make Rodauth/Roda use Rails
-support for flash and CSRF protection, instead of the separate support that
-ships with Roda.
+## Steps to Reproduce
 
-To use:
-
-  # Migrate the database, adding tables for all features supported by Rodauth
+* Set the ruby version. We're using 2.3.0 - set in the .ruby-version file. I"m using rbenv. You may be using rvm. Please set the ruby version accordingly.
+* Download a compatible version of bundler. I've downloaded 1.17.3. `gem install bundler -v 1.17.3`
+* Now run bundle install using that particular version of bundler: `bundle _1.17.3_ install`
+* Download unicorn in that particular version of ruby: `gem install unicorn`.
+* Migrate the db:
+ # Migrate the database, adding tables for all features supported by Rodauth
   sequel -m $(dirname $(dirname $(gem which rodauth.rb)))/spec/migrate_travis sqlite://db/rodauth-demo-rails.sqlite3
 
+* Run the app:
   # Run the app
   DATABASE_URL=sqlite://db/rodauth-demo-rails.sqlite3 unicorn # or puma
+
+## What's the problem?
+
+It's throwing an error: `/home/koshy/.rbenv/versions/2.3.0/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:120:in `require': cannot load such file -- erubi (LoadError)`. After I included that gem, another file that needed to be loaded could not be loaded - and accordingly, it again failed again.
